@@ -1,12 +1,11 @@
 version: '3'
 services:
-  web:
+  back:
+    restart: always
     build: .
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - .:/app
-    ports:
-     - "8000:8000"
     depends_on:
       - db
   db:
@@ -16,3 +15,10 @@ services:
      POSTGRES_PASSWORD: password
      POSTGRES_DB: dl
      POSTGRES_USER: dl
+  front:
+    restart: always
+    build: ../front/
+    ports:
+      - 8000:8000
+    depends_on:
+      - back
