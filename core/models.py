@@ -12,7 +12,7 @@ class Horecama(models.Model):
     )
     name = models.CharField(max_length=128)
     address = models.CharField(max_length=512)
-    photo = models.ImageField(upload_to='horecama/')
+    photo = models.ImageField(upload_to='horecama/', blank=True)
     type = models.CharField(choices=HORECAMA_TYPE_CHOICES, max_length=1)
     description = models.CharField(max_length=1024)
 
@@ -21,7 +21,7 @@ class Goods(models.Model):
     class Meta:
         verbose_name_plural = "Goods"
     name = models.CharField(max_length=128)
-    photo = models.ImageField(upload_to='goods/')
+    photo = models.ImageField(upload_to='goods/', blank=True)
     horecama = models.ForeignKey('Horecama', on_delete=models.CASCADE, related_name='menu')
     description = models.CharField(max_length=1024)
     price = models.PositiveIntegerField()
