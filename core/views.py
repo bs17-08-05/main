@@ -9,8 +9,10 @@ from rest_framework.response import Response
 
 from delivery_club.decorators import required_fields
 from delivery_club.settings import HOST
-from .models import Order, Goods, GoodsQuantityOrder
+from .models import Order, Goods, GoodsQuantityOrder, Horecama
 from .serializers import order_serializer
+from core.serializers.serializers import HorecamaSerializer, GoodsSerializer
+from django.core import serializers
 
 
 @api_view(['POST'])
@@ -34,6 +36,7 @@ def order(request):
         gq.save()
     return Response({'status': 'Ok', 'data': {'change_link': f'http://{HOST}/api/order/{order.id}?key={order.change_key}'}})
 
+  
 @api_view(['GET'])
 @renderer_classes((JSONRenderer,))
 def get_order(request, id):
@@ -86,3 +89,35 @@ def delete_order(request, id):
     order = get_object_or_404(Order, id=id, change_key=key)
     order.delete()
     return Response({'status':'Ok'})
+
+  
+ 
+@api_view(['GET'])
+@renderer_classes((JSONRenderer,))
+def get_horecama_list(request):
+
+    qset = Horecama.objects.values('name', 'address', 'photo', 'type', 'description')
+    json = HorecamaSerializer(qset, many=True)
+    size = len(qset)
+
+    responseData = {
+        'data': json.data,
+        'size': size,
+    }
+
+    return Response(responseData)
+
+
+@api_view(['GET'])
+@renderer_classes((JSONRenderer,))
+def get_goods_list(request, pk):
+
+    horecama = Horecama.objects.get(pk=pk)
+    qset = Goods.objects.filter(horecama=horecama)
+    json = GoodsSerializer(qset, many=True)
+
+    responseData = {
+        'data': json.data,
+    }
+
+    return Response(responseData)
