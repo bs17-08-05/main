@@ -1,13 +1,5 @@
 version: '3'
 services:
-  back:
-    restart: always
-    build: .
-    command: python manage.py runserver 0.0.0.0:8000
-    volumes:
-      - .:/app
-    depends_on:
-      - db
   db:
    image: postgres
    restart: always
@@ -15,13 +7,8 @@ services:
      POSTGRES_PASSWORD: password
      POSTGRES_DB: dl
      POSTGRES_USER: dl
-  front:
-    restart: always
-    build: ../front/
-    ports:
-      - 8000:8000
-    depends_on:
-      - back
+   ports:
+    - "5432:5432"
   minio:
     image: minio/minio
     container_name: minio
