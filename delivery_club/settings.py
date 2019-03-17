@@ -26,7 +26,7 @@ SECRET_KEY = '(=b0=5t9q8!zl64c&xu%39k06p&)1v*&6vgl%xh68*$&^szh89'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+HOST = '127.0.0.1:8000'
 
 # Application definition
 
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'core',
     'minio_storage',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
