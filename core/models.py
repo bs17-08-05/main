@@ -35,10 +35,11 @@ class Order(models.Model):
     delivered = models.BooleanField(default=False)
     finished = models.BooleanField(default=False)
     price = models.PositiveIntegerField()
-    goods = models.ManyToManyField('Goods', related_name='orders', through='GoodsQuatityOrder')
+    goods = models.ManyToManyField('Goods', related_name='orders', through='GoodsQuantityOrder')
+    change_key = models.CharField(max_length=16, blank=True)
 
 
-class GoodsQuatityOrder(models.Model):
-    quatity = models.PositiveIntegerField()
-    order = models.ForeignKey('Order', on_delete=models.CASCADE)
+class GoodsQuantityOrder(models.Model):
+    quantity = models.PositiveIntegerField()
+    order = models.ForeignKey('Order', related_name='goods_quantity', on_delete=models.CASCADE)
     goods = models.ForeignKey('Goods', on_delete=models.CASCADE)
