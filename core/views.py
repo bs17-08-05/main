@@ -75,3 +75,14 @@ def change_order(request, id):
     order.change_key = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
     order.save()
     return Response({'status': 'Ok', 'data': {'change_link': f'http://{HOST}/api/order/{order.id}?key={order.change_key}'}})
+
+
+@api_view(['DELETE'])
+@renderer_classes((JSONRenderer,))
+def delete_order(request, id):
+    if 'key' not in request.query_params:
+        return Response({'status': 'key is required'}, status=400)
+    key = request.query_params['key']
+    order = get_object_or_404(Order, id=id, change_key=key)
+    order.delete()
+    return Response({'status':'Ok'})
