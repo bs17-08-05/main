@@ -1,4 +1,5 @@
 Django
 psycopg2
-django-minio
+django-minio-storage
 Pillow
+djangorestframework
