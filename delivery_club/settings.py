@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'minio_storage',
 ]
 
 MIDDLEWARE = [
@@ -118,10 +119,12 @@ USE_L10N = True
 USE_TZ = True
 
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
 
-MINIO_SERVER = 'minio:9000'
-MINIO_ACCESSKEY = 'FB411452A47D9D99'
-MINIO_SECRET = 'IbD0LlxwJkZdKOlFufpvw0rtqsTT4i1D'
-MINIO_BUCKET = 'images'
-MINIO_SECURE = False
-DEFAULT_FILE_STORAGE = 'django_minio.storage.MinioStorage'
+MINIO_STORAGE_ENDPOINT = 'minio:9000'
+MINIO_STORAGE_ACCESS_KEY = 'FB411452A47D9D99'
+MINIO_STORAGE_SECRET_KEY = 'IbD0LlxwJkZdKOlFufpvw0rtqsTT4i1D'
+MINIO_STORAGE_MEDIA_BUCKET_NAME = 'images'
+MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = True
+MINIO_STORAGE_USE_HTTPS = False
+DEFAULT_FILE_STORAGE = 'minio_storage.storage.MinioMediaStorage'
