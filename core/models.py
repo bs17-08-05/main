@@ -43,3 +43,4 @@ class GoodsQuantityOrder(models.Model):
     quantity = models.PositiveIntegerField()
     order = models.ForeignKey('Order', related_name='goods_quantity', on_delete=models.CASCADE)
     goods = models.ForeignKey('Goods', on_delete=models.CASCADE)
+

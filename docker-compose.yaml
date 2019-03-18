@@ -15,6 +15,8 @@ services:
      POSTGRES_PASSWORD: password
      POSTGRES_DB: dl
      POSTGRES_USER: dl
+   ports:
+    - "5432:5432"
   front:
     restart: always
     build: ../front/
