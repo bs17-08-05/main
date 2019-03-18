@@ -16,6 +16,9 @@ class Horecama(models.Model):
     type = models.CharField(choices=HORECAMA_TYPE_CHOICES, max_length=1)
     description = models.CharField(max_length=1024)
 
+    class Meta:
+        verbose_name_plural = "Food Producer"
+
 
 class Goods(models.Model):
     class Meta:

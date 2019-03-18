@@ -2,6 +2,7 @@ import random
 import string
 
 from django.shortcuts import get_object_or_404
+from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.renderers import JSONRenderer
 from rest_framework.decorators import api_view, renderer_classes
@@ -78,13 +79,14 @@ def change_order(request, id):
     order.change_key = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
     order.save()
     return Response({'status': 'Ok', 'data': {'change_link': f'http://{HOST}/api/order/{order.id}?key={order.change_key}'}})
-  
- 
+
+
+# @csrf_exempt
 @api_view(['GET'])
 @renderer_classes((JSONRenderer,))
 def get_horecama_list(request):
 
-    qset = Horecama.objects.values('name', 'address', 'photo', 'type', 'description')
+    qset = Horecama.objects.values('pk', 'name', 'address', 'photo', 'type', 'description')
     json = HorecamaSerializer(qset, many=True)
     size = len(qset)
 
@@ -93,7 +95,9 @@ def get_horecama_list(request):
         'size': size,
     }
 
-    return Response(responseData)
+    response = Response(responseData)
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
 
 
 @api_view(['GET'])
@@ -107,5 +111,6 @@ def get_goods_list(request, pk):
     responseData = {
         'data': json.data,
     }
-
-    return Response(responseData)
+    response = Response(responseData)
+    response["Access-Control-Allow-Origin"] = "*"
+    return response

@@ -6,7 +6,7 @@ class HorecamaSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Horecama
-        fields = ('id', 'name', 'address', 'photo' 'type', 'description')
+        fields = ('pk', 'name', 'address', 'photo', 'type', 'description')
 
 
 class GoodsSerializer(serializers.ModelSerializer):
