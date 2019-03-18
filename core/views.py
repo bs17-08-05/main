@@ -81,7 +81,6 @@ def change_order(request, id):
     return Response({'status': 'Ok', 'data': {'change_link': f'http://{HOST}/api/order/{order.id}?key={order.change_key}'}})
 
 
-<<<<<<< HEAD
 @api_view(['DELETE'])
 @renderer_classes((JSONRenderer,))
 def delete_order(request, id):
@@ -93,10 +92,6 @@ def delete_order(request, id):
     return Response({'status':'Ok'})
 
   
- 
-=======
-# @csrf_exempt
->>>>>>> origin/apis
 @api_view(['GET'])
 @renderer_classes((JSONRenderer,))
 def get_horecama_list(request):
