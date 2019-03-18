@@ -9,6 +9,12 @@ class Command(BaseCommand):
         restaurant = Horecama(name='108', address='Улица Универститетская блабла', type='R', description='Блабла')
         restaurant.save()
 
+        restaurant = Horecama(name='Pyatorochka', address='Улица Универститетская блабла', type='M', description='Блабла')
+        restaurant.save()
+
+        restaurant = Horecama(name='Bechetle', address='Улица Универститетская блабла', type='M', description='Блабла')
+        restaurant.save()
+
         goods = Goods(name="Ananas", description="", price="20", horecama=restaurant)
         goods.save()
 
