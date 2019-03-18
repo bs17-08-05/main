@@ -18,6 +18,8 @@ services:
   front:
     restart: always
     build: ../front/
+    volumes:
+      - ../front/dist/:/var/www
     ports:
       - 8000:8000
     depends_on:
