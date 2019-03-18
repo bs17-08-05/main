@@ -1,0 +1,6 @@
+{% extends "admin/index.html" %}
+
+{% block content %}
+    {{ block.super }}
+    <a href='{{ settings.HOST }}/admin/business_report/'>Download business report</a>
+{% endblock %}
