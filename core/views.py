@@ -96,8 +96,8 @@ def delete_order(request, id):
 @renderer_classes((JSONRenderer,))
 def get_horecama_list(request):
 
-    qset = Horecama.objects.values('pk', 'name', 'address', 'photo', 'type', 'description')
-    json = HorecamaSerializer(qset, many=True)
+    qset = Horecama.objects.all()
+    json = HorecamaSerializer(qset, many=True, context={'request': request})
     size = len(qset)
 
     responseData = {
@@ -116,7 +116,7 @@ def get_goods_list(request, pk):
 
     horecama = Horecama.objects.get(pk=pk)
     qset = Goods.objects.filter(horecama=horecama)
-    json = GoodsSerializer(qset, many=True)
+    json = GoodsSerializer(qset, many=True, context={'request': request})
 
     responseData = {
         'data': json.data,
