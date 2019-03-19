@@ -26,7 +26,7 @@ SECRET_KEY = '(=b0=5t9q8!zl64c&xu%39k06p&)1v*&6vgl%xh68*$&^szh89'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+HOST = '127.0.0.1:8000'
 
 # Application definition
 
@@ -37,6 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'core',
+    'minio_storage',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -54,7 +57,7 @@ ROOT_URLCONF = 'delivery_club.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'core/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -116,8 +119,13 @@ USE_L10N = True
 
 USE_TZ = True
 
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.1/howto/static-files/
-
 STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+#MINIO_STORAGE_ENDPOINT = 'minio:9000'
+#MINIO_STORAGE_ACCESS_KEY = 'FB411452A47D9D99'
+#MINIO_STORAGE_SECRET_KEY = 'IbD0LlxwJkZdKOlFufpvw0rtqsTT4i1D'
+#MINIO_STORAGE_MEDIA_BUCKET_NAME = 'images'
+#MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = True
+#MINIO_STORAGE_USE_HTTPS = False
+#DEFAULT_FILE_STORAGE = 'minio_storage.storage.MinioMediaStorage'
