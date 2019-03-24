@@ -129,3 +129,8 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 #MINIO_STORAGE_AUTO_CREATE_MEDIA_BUCKET = True
 #MINIO_STORAGE_USE_HTTPS = False
 #DEFAULT_FILE_STORAGE = 'minio_storage.storage.MinioMediaStorage'
+
+try:
+    from .overrides import *
+except ImportError:
+    pass
