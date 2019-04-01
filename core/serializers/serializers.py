@@ -10,7 +10,10 @@ class HorecamaSerializer(serializers.ModelSerializer):
         fields = ('pk', 'name', 'address', 'photo_url', 'type', 'description')
     
     def get_photo_url(self, horecama):
-        return horecama.photo.url
+        if horecama.photo:
+            return horecama.photo.url
+        else:
+            return ''
 
 class GoodsSerializer(serializers.ModelSerializer):
     photo_url = serializers.SerializerMethodField()

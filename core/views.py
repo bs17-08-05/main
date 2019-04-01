@@ -10,9 +10,10 @@ from rest_framework.response import Response
 
 from delivery_club.decorators import required_fields
 from delivery_club.settings import HOST
-from .models import Order, Goods, GoodsQuantityOrder, Horecama
+from .models import Order, Goods, GoodsQuantityOrder, Horecama, HorecamaFeedback
 from .serializers import order_serializer
 from core.serializers.serializers import HorecamaSerializer, GoodsSerializer
+from core.serializers.horecama_feedbacks_serializer import *
 from django.core import serializers
 
 
@@ -105,6 +106,21 @@ def get_horecama_list(request):
         'size': size,
     }
 
+    response = Response(responseData)
+    response["Access-Control-Allow-Origin"] = "*"
+    return response
+
+@api_view(['GET'])
+@renderer_classes((JSONRenderer,))
+def get_horecama_feedbacks(request, pk):
+
+    horecama = Horecama.objects.get(pk=pk)
+    qset = HorecamaFeedback.objects.filter(horecama=horecama)
+    json = HorecamaFeedbacksSerializer(qset, many=True, context={'request': request})
+
+    responseData = {
+        'data': json.data,
+    }
     response = Response(responseData)
     response["Access-Control-Allow-Origin"] = "*"
     return response

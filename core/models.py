@@ -12,7 +12,7 @@ class Horecama(models.Model):
     )
     name = models.CharField(max_length=128)
     address = models.CharField(max_length=512)
-    photo = models.ImageField(upload_to='horecama/', blank=True)
+    photo = models.ImageField(upload_to='horecama/', blank=True, null=True)
     type = models.CharField(choices=HORECAMA_TYPE_CHOICES, max_length=1)
     description = models.CharField(max_length=1024)
 
@@ -29,6 +29,22 @@ class Goods(models.Model):
     description = models.CharField(max_length=1024)
     price = models.PositiveIntegerField()
 
+
+class HorecamaFeedback(models.Model):
+    user_name = models.CharField(max_length=128)
+    horecama = models.ForeignKey('Horecama', on_delete=models.CASCADE)
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, blank=True, null=True) # Optional order
+    HORECAMA_RATING_CHOICES = (
+        (1, 'Awful'),
+        (2, 'Bad'),
+        (3, 'Not bad'),
+        (4, 'Good'),
+        (5, 'Fine'),
+    )
+    rating = models.SmallIntegerField(choices=HORECAMA_RATING_CHOICES)
+    time = models.DateTimeField(default=datetime.now)
+    pros = models.CharField(max_length=512, blank=True)
+    cons = models.CharField(max_length=512, blank=True)
 
 class Order(models.Model):
     time = models.DateTimeField(default=datetime.now, blank=True)
