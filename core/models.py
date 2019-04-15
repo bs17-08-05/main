@@ -63,3 +63,36 @@ class GoodsQuantityOrder(models.Model):
     order = models.ForeignKey('Order', related_name='goods_quantity', on_delete=models.CASCADE)
     goods = models.ForeignKey('Goods', on_delete=models.CASCADE)
 
+
+class Session(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    token = models.CharField(max_length=2048)
+    refresh_token = models.CharField(max_length=2048)
+
+
+class User(models.Model):
+    USER_TYPES = (
+        ('CU', 'Customer'),
+        ('CO', 'Courier'),
+    )
+    phone_number = models.CharField(max_length=12)
+    password = models.CharField(max_length=128)
+    salt = models.CharField(max_length=512)
+    user_name = models.CharField(max_length=128)
+    type = models.CharField(max_length=2, choices=USER_TYPES)
+
+
+class Customer(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    address = models.CharField(max_length=512, blank=True)
+    orders = models.ManyToManyField('Order', related_name='user')
+
+
+class Courier(models.Model):
+    user = models.ForeignKey('User', on_delete=models.CASCADE)
+    orders = models.ManyToManyField('Order', related_name='courier')
+
+
+class ActiveCourier(models.Model):
+    channel_name = models.CharField(max_length=128)
+    has_order = models.BooleanField()
