@@ -21,6 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '(=b0=5t9q8!zl64c&xu%39k06p&)1v*&6vgl%xh68*$&^szh89'
+SECRET = 'dKkIVeAczIDIfF9JPSr4cQ7j3l0jTGT9'
+REDIS_HOST = '127.0.0.1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -40,9 +42,23 @@ INSTALLED_APPS = [
     'core',
     'minio_storage',
     'rest_framework',
+    'corsheaders',
+    'channels',
 ]
 
+
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels_redis.core.RedisChannelLayer',
+        'CONFIG': {
+            'hosts': [(REDIS_HOST, 6379)],
+        },
+    }
+}
+ASGI_APPLICATION = 'delivery_club.routing.application'
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -105,6 +121,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/

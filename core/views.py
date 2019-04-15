@@ -2,22 +2,23 @@ import random
 import string
 
 from django.shortcuts import get_object_or_404
-from django.views.decorators.csrf import csrf_exempt
+from rest_framework.permissions import IsAuthenticated
 
 from rest_framework.renderers import JSONRenderer
-from rest_framework.decorators import api_view, renderer_classes
+from rest_framework.decorators import api_view, renderer_classes, authentication_classes, permission_classes
 from rest_framework.response import Response
 
+from .authentication import Authentication
 from delivery_club.decorators import required_fields
 from delivery_club.settings import HOST
 from .models import Order, Goods, GoodsQuantityOrder, Horecama
 from .serializers import order_serializer
 from core.serializers.serializers import HorecamaSerializer, GoodsSerializer
-from django.core import serializers
 
 
 @api_view(['POST'])
 @renderer_classes((JSONRenderer,))
+@authentication_classes((Authentication, ))
 @required_fields('user_name', 'user_phone', 'address', 'goods')
 def order(request):
     data = request.data
@@ -39,6 +40,7 @@ def order(request):
 
   
 @api_view(['GET'])
+@authentication_classes((Authentication, ))
 @renderer_classes((JSONRenderer,))
 def get_order(request, id):
     if 'key' not in request.query_params:
@@ -50,6 +52,7 @@ def get_order(request, id):
 
 @api_view(['POST'])
 @renderer_classes((JSONRenderer,))
+@authentication_classes((Authentication, ))
 @required_fields('user_name', 'user_phone', 'address', 'goods')
 def change_order(request, id):
     if 'key' not in request.query_params:
@@ -82,6 +85,7 @@ def change_order(request, id):
 
 
 @api_view(['DELETE'])
+@authentication_classes((Authentication, ))
 @renderer_classes((JSONRenderer,))
 def delete_order(request, id):
     if 'key' not in request.query_params:
@@ -93,6 +97,7 @@ def delete_order(request, id):
 
   
 @api_view(['GET'])
+@authentication_classes((Authentication, ))
 @renderer_classes((JSONRenderer,))
 def get_horecama_list(request):
 
@@ -111,6 +116,7 @@ def get_horecama_list(request):
 
 
 @api_view(['GET'])
+@authentication_classes((Authentication, ))
 @renderer_classes((JSONRenderer,))
 def get_goods_list(request, pk):
 

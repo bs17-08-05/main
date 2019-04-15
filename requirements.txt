@@ -3,3 +3,9 @@ psycopg2
 django-minio-storage
 Pillow
 djangorestframework
+PyJwt
+django-cors-headers
+channels
+channels-redis
+asgi_redis
+channels_redis

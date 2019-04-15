@@ -8,6 +8,11 @@ services:
       - .:/app
     depends_on:
       - db
+  auth:
+    restart: always
+    build: ../auth
+    depends_on:
+      - redis
   db:
    image: postgres
    restart: always
@@ -20,8 +25,6 @@ services:
   front:
     restart: always
     build: ../front/
-    volumes:
-      - ../front/dist/:/var/www
     ports:
       - 8000:8000
     depends_on:
@@ -37,3 +40,6 @@ services:
     volumes:
       - ../minio-data:/data
     command: server /data
+  redis:
+    image: redis
+    restart: always

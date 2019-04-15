@@ -20,3 +20,15 @@ services:
     volumes:
       - ../minio-data:/data
     command: server /data
+  redis:
+    image: redis
+    restart: always
+    ports:
+      - "6379:6379"
+  auth:
+    build: ../auth/
+    restart: always
+    volumes:
+      - ../auth/:/app
+    ports:
+      - "9325:9325"
