@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inno Delivery Club -- Courier</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+<div class="header container">
+    <h1>All orders</h1>
+</div>
+<div class="main container">
+    <div class="row">
+        <div class="col-2">User name</div>
+        <div class="col-2">User phone</div>
+        <div class="col-3">User address</div>
+        <div class="col-1">Price</div>
+    </div>
+    {% for order in orders %}
+    <div class="row order">
+        <div class="col-2">{{ order.user_name }}</div>
+        <div class="col-2">{{ order.user_phone }}</div>
+        <div class="col-3">{{ order.address }}</div>
+        <div class="col-1">{{ order.price }}</div>
+        <div class="col-4 buttons">
+            <a class="btn btn-info" href="/courier/order/{{ order.id }}/">Accept</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

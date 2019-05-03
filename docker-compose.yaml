@@ -29,6 +29,12 @@ services:
       - 8000:8000
     depends_on:
       - back
+  courier_front:
+    restart: always
+    build: ../courier_front/
+    depends_on:
+      - back
+      - front
   minio:
     image: minio/minio
     container_name: minio

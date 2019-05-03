@@ -25,21 +25,20 @@ from django.core import serializers
 @required_fields('user_name', 'user_phone', 'address', 'goods')
 def order(request):
     data = request.data
-    order = Order(user_name=data['user_name'], user_phone=data['user_phone'], address=data['address'], price=0)
-    goods_quantity_dict = {i['id']:int(i['quantity']) for i in data['goods']}
+    order_m = Order(user_name=data['user_name'], user_phone=data['user_phone'], address=data['address'], price=0)
+    goods_quantity_dict = {i['id']: int(i['quantity']) for i in data['goods']}
     goods = Goods.objects.filter(id__in=goods_quantity_dict.keys())
-    goods_quatities = []
     price = 0
     for good in list(goods):
         quantity = goods_quantity_dict[good.id]
         price += good.price * quantity
-    order.price = price
-    order.change_key = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
-    order.save()
+    order_m.price = price
+    order_m.change_key = ''.join(random.choices(string.ascii_letters + string.digits, k=16))
+    order_m.save()
     for good in list(goods):
-        gq = GoodsQuantityOrder(quantity=quantity, order=order, goods=good)
+        gq = GoodsQuantityOrder(quantity=quantity, order=order_m, goods=good)
         gq.save()
-    return Response({'status': 'Ok', 'data': {'change_link': f'http://{HOST}/api/order/{order.id}?key={order.change_key}'}})
+    return Response({'status': 'Ok', 'data': {'change_link': f'http://{HOST}/api/order/{order_m.id}?key={order_m.change_key}'}})
 
   
 @api_view(['GET'])

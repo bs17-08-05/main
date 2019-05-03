@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.contrib.admin import AdminSite
 from django.http import HttpResponse
 
-from .models import Horecama, Goods, Order, GoodsQuantityOrder
+from .models import Horecama, Goods, Order, GoodsQuantityOrder, User, Courier
 from .reports import make_csv_file
 
 class AdminSiteReports(AdminSite):
@@ -32,3 +32,5 @@ admin_site_reports.register(Horecama)
 admin_site_reports.register(Goods)
 admin_site_reports.register(Order)
 admin_site_reports.register(GoodsQuantityOrder)
+admin_site_reports.register(User)
+admin_site_reports.register(Courier)

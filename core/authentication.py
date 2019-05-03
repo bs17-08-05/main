@@ -8,11 +8,11 @@ from .models import User
 class Authentication(BaseAuthentication):
 
     def authenticate(self, request):
-        if 'authorization' in request.META:
-            token = request.META.get('Authorization')
+        if 'HTTP_AUTHORIZATION' in request.META:
+            token = request.META.get('HTTP_AUTHORIZATION')
             token = token.split()[1]
             try:
-                payload = jwt.decode(token, SECRET, leeway=0)
+                payload = jwt.decode(token.encode('utf-8'), SECRET)
                 if 'user_id' not in payload:
                     raise Exception
                 user_id = payload['user_id']

@@ -53,6 +53,7 @@ class Order(models.Model):
     address = models.CharField(max_length=512)
     delivered = models.BooleanField(default=False)
     finished = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
     price = models.PositiveIntegerField()
     goods = models.ManyToManyField('Goods', related_name='orders', through='GoodsQuantityOrder')
     change_key = models.CharField(max_length=16, blank=True)
